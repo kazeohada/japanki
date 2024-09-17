@@ -1,25 +1,56 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import SearchScreen from "./screens/SearchScreen.js";
+import React, { useState } from "react";
+import ReactDOM from 'react-dom';
 
-import { eel } from "./eel.js";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    eel.set_host("ws://localhost:8888");
-    eel.hello();
-  }
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-        </header>
-        <SearchScreen/>
-      </div>
-    );
-  }
+import SearchScreen from './screens/SearchScreen';
+import SelectionScreen from './screens/SelectionScreen';
+
+
+
+
+function App() {
+  const [searchKeywords, setSearchKeywords] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+
+  React.useEffect(() => {
+    eel.hello_eel();
+    console.log(searchResults)
+  }, []);
+
+  const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <SearchScreen 
+          searchKeywords={searchKeywords}
+          searchResults={searchResults}
+          setParentSearchKeywords={setSearchKeywords}
+          setParentSearchResults={setSearchResults}
+        />,
+    },
+    {
+        path: '/selection',
+        element: <SelectionScreen 
+        searchKeywords={searchKeywords}
+        searchResults={searchResults}
+        setParentSearchKeywords={setSearchKeywords}
+        setParentSearchResults={setSearchResults}
+      />,
+    }
+  ]) //change to memory router??
+  
+
+  return (
+    <div className="App">
+      <header className="App-header">
+      </header>
+      
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+    </div>
+  );
 }
 
 export default App;
