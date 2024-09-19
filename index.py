@@ -4,6 +4,7 @@ import sys
 import database
 import search
 
+selected = []
 
 @eel.expose
 def hello_eel():
@@ -11,13 +12,12 @@ def hello_eel():
 
 @eel.expose
 def search_keywords(search_keywords):
-    search_results = search.search_database(search_keywords)
-    selected = {}
+    qsearch_results = search.search_database(search_keywords)
+    search_results = []
     for keyword in search_keywords:
-        search_results[keyword] = search.sort_results(search_results[keyword], keyword)
-        selected[keyword] = [(search.auto_select(search_results[keyword], keyword))]
+        qsearch_results[keyword] = search.sort_results(qsearch_results[keyword], keyword)
+        search_results.append({"keyword": keyword, "result": qsearch_results[keyword], "selected": selected})
     return search_results
-
 
 
 if __name__ == '__main__':

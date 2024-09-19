@@ -3,7 +3,9 @@ import React from "react";
 
 export default function searchResultListItem(props) {
     return (
-        <div></div>
+        <div>
+            {props.keyword}
+        </div>
     )
 
 }
