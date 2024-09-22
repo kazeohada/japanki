@@ -1,0 +1,36 @@
+.keywordButton {
+    background-color: #f0f0f0;
+    width: fit-content;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.keywordButton:hover {
+    background-color: #d3d3d3
+}
+
+.listItem {
+    background-color: #f5f5f5;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    text-align: start;
+    padding: 5px;
+}
+
+.wordDefinitionBox {
+    flex: 1;
+    background-color: white;
+}
+
+.bigTerm {
+    font-size: 24px;
+    margin: 5px;
+}
+
+.smallTerm {
+    font-size: 16px;
+    margin: 5px;
+}

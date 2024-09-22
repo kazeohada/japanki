@@ -3,3 +3,4 @@ __pycache__/
 qt/
 *.apkg
 config.py
+node_modules

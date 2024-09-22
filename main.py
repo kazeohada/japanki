@@ -84,11 +84,11 @@ def auto_select(search_result, keyword):
         for j in range(len(word["Terms"])):
             term = word["Terms"][j]
             if term["Reading"] == keyword:
-                return search_result[i]["Terms"][j]
+                return [search_result[i]["Terms"][j]]
             if term["Japanese"] == keyword:
-                return search_result[i]["Terms"][j]
+                return [search_result[i]["Terms"][j]]
     
-    return search_result[0]["Terms"][0]
+    return [search_result[0]["Terms"][0]]
 
 def main():
     search_keywords = list(set(input_search()))
