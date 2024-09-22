@@ -9,10 +9,10 @@ def search_database(search_keywords):
     for search_keyword in search_keywords:
         search_result = database.search_word(keyword=search_keyword)
         if not incomplete and search_result == []:
-            all_have_results = True
+            incomplete = True
         search_results[search_keyword] = search_result
     
-    return search_results, incomplete
+    return search_results
 
 def input_search():
     print("Search for words:")

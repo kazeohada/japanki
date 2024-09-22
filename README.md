@@ -1,8 +1,8 @@
 # Japanki - Work In Progress!
 
-A Python application that automatically creates japanese vocabulary Anki flashcards.
+A Python Eel and React.JS application that automatically creates japanese vocabulary Anki flashcards.
 
-Currently a CLI-based application, as I wanted something small that worked for me to be done as soon as I could, but I'm planning on expanding it into a Desktop application!
+Initially a CLI-based application, as I wanted something small that worked for me to be done as soon as I could, but I'm planning on expanding it into a Desktop application!
 
 Some plans that I have for it:
 - Kanji flashcards
