@@ -6,7 +6,6 @@ import WordDefinitionDisplay from "./WordDefinitionDisplay";
 export default function SearchResultDisplay(props) {
     console.log(props.searchResult)
 
-    const [selectedWord, setSelectedWord] = useState(0);
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -15,13 +14,16 @@ export default function SearchResultDisplay(props) {
                     <SearchResultListItem 
                         word={word} 
                         index={index}
-                        setParentSelectedWord={setSelectedWord}
+                        setDisplayedWord={props.setDisplayedWord}
+                        setDisplayedTerm={props.setDisplayedTerm}
                     />
                 ))}
             </div>
             <WordDefinitionDisplay 
-                word={props.searchResult.result[selectedWord]}
-                selectedTerms={props.searchResult.selected} 
+                word={props.searchResult.result[props.displayedWord]}
+                selectedTerms={props.searchResult.selected}
+                displayedTerm={props.displayedTerm}
+                setDisplayedTerm={props.setDisplayedTerm}
             />
         </div>
     )

@@ -10,6 +10,10 @@ export default function SelectionScreen(props) {
     const [searchResults, setSearchResults] = useState(props.searchResults);
     const [selectedTerms, setSelectedTerms] = useState([])
     const [displayedIndex, setDisplayedIndex] = useState(0)
+    const [displayedWord, setDisplayedWord] = useState(0);
+    const [displayedTerm, setDisplayedTerm] = useState(0);
+
+
     const navigate = useNavigate();
 
     React.useEffect(() => {
@@ -23,7 +27,9 @@ export default function SelectionScreen(props) {
       } else if (newIndex < 0) {
         newIndex = searchResults.length - 1
       }
-      setDisplayedIndex(newIndex);
+      setDisplayedIndex(newIndex)
+      setDisplayedWord(0)
+      setDisplayedTerm(0)
     }
 
     
@@ -40,7 +46,13 @@ export default function SelectionScreen(props) {
         </div>
         <div>
           <div>
-            <SearchResultDisplay searchResult={searchResults[displayedIndex]} />
+            <SearchResultDisplay 
+              searchResult={searchResults[displayedIndex]}
+              displayedWord={displayedWord}
+              displayedTerm={displayedTerm}
+              setDisplayedWord={setDisplayedWord}
+              setDisplayedTerm={setDisplayedTerm} 
+            />
           </div>
         </div>
       </div>

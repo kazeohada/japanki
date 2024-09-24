@@ -34,7 +34,10 @@ export default function SearchResultListItem(props) {
         <div 
             lang="ja"
             className="listItem"
-            onClick={() => {props.setParentSelectedWord(props.index)}}
+            onClick={() => {
+                props.setDisplayedWord(props.index)
+                props.setDisplayedTerm(0)
+            }}
         >
             <div>{japaneseText()}</div>
             <div>{defintionsText()}</div>

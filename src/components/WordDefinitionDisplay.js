@@ -5,10 +5,8 @@ import TermKanjiDefinition from "./TermKanjiDefinition";
 import "./style.css";
 
 export default function WordDefinitionDisplay(props) {
-    const [displayedTerm, setDisplayedTerm] = useState(0);
     var terms = new Set()
-    console.log(displayedTerm)
-    console.log(props.word.Terms[displayedTerm].Meanings)
+    var displayedTerm = props.displayedTerm
 
     const japaneseTermText = (term, i) => {
         if (terms.has(term.Japanese)) {
@@ -16,7 +14,7 @@ export default function WordDefinitionDisplay(props) {
         }
         terms.add(term.Japanese)
         
-        return (<span lang="ja" className={term.Japanese == props.word.Terms[displayedTerm].Japanese ? "bigTerm" : "smallTerm"} onClick={() => {setDisplayedTerm(i)}}>{term.Japanese}</span>)
+        return (<span lang="ja" className={term.Japanese == props.word.Terms[displayedTerm].Japanese ? "bigTerm" : "smallTerm"} onClick={() => {props.setDisplayedTerm(i)}}>{term.Japanese}</span>)
     }
 
     const readingTermText = (term, i) => {
@@ -24,7 +22,7 @@ export default function WordDefinitionDisplay(props) {
             return (<></>)
         }
 
-        return (<span lang="ja" className={i === displayedTerm ? "bigTerm" : "smallTerm"} onClick={() => {setDisplayedTerm(i)}}>{term.Reading}</span>)
+        return (<span lang="ja" className={i === displayedTerm ? "bigTerm" : "smallTerm"} onClick={() => {props.setDisplayedTerm(i)}}>{term.Reading}</span>)
     }
 
     return (
