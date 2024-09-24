@@ -16,7 +16,6 @@ function App() {
 
   React.useEffect(() => {
     eel.hello_eel();
-    console.log(searchResults)
   }, []);
 
   const router = createBrowserRouter([

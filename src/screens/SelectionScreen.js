@@ -11,7 +11,6 @@ export default function SelectionScreen(props) {
     const [selectedTerms, setSelectedTerms] = useState([])
     const [displayedIndex, setDisplayedIndex] = useState(0)
     const navigate = useNavigate();
-    console.log(searchResults);
 
     React.useEffect(() => {
       eel.hello_eel();

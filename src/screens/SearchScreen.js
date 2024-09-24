@@ -24,14 +24,12 @@ export default function SearchScreen(props) {
   };
 
   const removeSearchKey = (index) => {
-    console.log("test");
     setSearchKeywords((prevSearchKeywords) =>
         prevSearchKeywords.filter((_, i) => i !== index)
     );
   };
 
   const submitSearchKeywords = () => {
-    console.log("submit");
     if (searchKeywords.length > 0) {
         eel.search_keywords(searchKeywords)((results) => {
           setSearchResults(results);
