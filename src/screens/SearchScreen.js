@@ -4,8 +4,6 @@ import SearchKeywordButton from "../components/SearchKeywordButton";
 import { eel } from "../eel.js";
 
 export default function SearchScreen(props) {
-  const [searchKeywords, setSearchKeywords] = useState(props.searchKeywords);
-  const [searchResults, setSearchResults] = useState(props.searchResults);
   const navigate = useNavigate();
 
   // equivalent to constructor
@@ -17,23 +15,22 @@ export default function SearchScreen(props) {
     if (event.key === "Enter") {
       const word = event.target.value.trim();
       if (word) {
-        setSearchKeywords((prevSearchKeywords) => [...prevSearchKeywords, word]);
+        props.setSearchKeywords((prevSearchKeywords) => [...prevSearchKeywords, word]);
         event.target.value = "";
       }
     }
   };
 
   const removeSearchKey = (index) => {
-    setSearchKeywords((prevSearchKeywords) =>
+    props.setSearchKeywords((prevSearchKeywords) =>
         prevSearchKeywords.filter((_, i) => i !== index)
     );
   };
 
   const submitSearchKeywords = () => {
-    if (searchKeywords.length > 0) {
-        eel.search_keywords(searchKeywords)((results) => {
-          setSearchResults(results);
-          props.setParentSearchResults(results)
+    if (props.searchKeywords.length > 0) {
+        eel.search_keywords(props.searchKeywords)((results) => {
+          props.setSearchResults(results);
           navigate("/selection");
         });
     }
@@ -47,7 +44,7 @@ export default function SearchScreen(props) {
         placeholder="Search for words"
         onKeyDown={addSearchKey}
       />
-      {searchKeywords.map((keyword, index) => (
+      {props.searchKeywords.map((keyword, index) => (
         <SearchKeywordButton
           key={index}
           index={index}

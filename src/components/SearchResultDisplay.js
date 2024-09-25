@@ -4,15 +4,17 @@ import SearchResultListItem from "./SearchResultListItem";
 import WordDefinitionDisplay from "./WordDefinitionDisplay";
 
 export default function SearchResultDisplay(props) {
-    console.log(props.searchResult)
-
+    console.log("SearchResultDisplay")
+    console.log(props)
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{flex: "1"}}>
-                {props.searchResult.result.map((word, index) => (
+                {props.searchResult.map((word, index) => (
                     <SearchResultListItem 
-                        word={word} 
+                        keyword={props.keyword}
+                        word={word}
+                        selectedTerms={props.selectedTerms}
                         index={index}
                         setDisplayedWord={props.setDisplayedWord}
                         setDisplayedTerm={props.setDisplayedTerm}
@@ -20,8 +22,9 @@ export default function SearchResultDisplay(props) {
                 ))}
             </div>
             <WordDefinitionDisplay 
-                word={props.searchResult.result[props.displayedWord]}
-                selectedTerms={props.searchResult.selected}
+                keyword={props.keyword}
+                word={props.searchResult[props.displayedWord]}
+                selectedTerms={props.selectedTerms}
                 displayedTerm={props.displayedTerm}
                 setDisplayedTerm={props.setDisplayedTerm}
             />

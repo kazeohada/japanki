@@ -4,21 +4,32 @@ import sys
 import database
 import search
 
-selected = []
+keywords = []
+search_results = {}
+selected_terms = {}
+
 
 @eel.expose
 def hello_eel():
     print('Hello Eel')
 
 @eel.expose
-def search_keywords(search_keywords):
-    qsearch_results = search.search_database(search_keywords)
-    search_results = []
-    for keyword in search_keywords:
+def search_keywords(k):
+    global keywords
+    global search_results
+
+    keywords = k
+
+    qsearch_results = search.search_database(keywords)
+    for keyword in keywords:
         qsearch_results[keyword] = search.sort_results(qsearch_results[keyword], keyword)
-        selected = search.auto_select(qsearch_results[keyword], keyword)
-        search_results.append({"keyword": keyword, "result": qsearch_results[keyword], "selected": selected})
+        search_results[keyword] = qsearch_results[keyword]
+        selected_terms[keyword] = search.auto_select(qsearch_results[keyword], keyword)
     return search_results
+
+@eel.expose
+def get_selected(): # TODO
+    return selected_terms
 
 
 if __name__ == '__main__':

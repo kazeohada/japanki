@@ -24,8 +24,8 @@ function App() {
         element: <SearchScreen 
           searchKeywords={searchKeywords}
           searchResults={searchResults}
-          setParentSearchKeywords={setSearchKeywords}
-          setParentSearchResults={setSearchResults}
+          setSearchKeywords={setSearchKeywords}
+          setSearchResults={setSearchResults}
         />,
     },
     {
@@ -33,8 +33,8 @@ function App() {
         element: <SelectionScreen 
         searchKeywords={searchKeywords}
         searchResults={searchResults}
-        setParentSearchKeywords={setSearchKeywords}
-        setParentSearchResults={setSearchResults}
+        setSearchKeywords={setSearchKeywords}
+        setSearchResults={setSearchResults}
       />,
     }
   ]) //change to memory router??
