@@ -17,7 +17,7 @@ export default function SearchResultDisplay(props) {
                         selectedTerms={props.selectedTerms}
                         index={index}
                         setDisplayedWord={props.setDisplayedWord}
-                        setDisplayedTerm={props.setDisplayedTerm}
+                        setDisplayedTermIndex={props.setDisplayedTermIndex}
                     />
                 ))}
             </div>
@@ -25,8 +25,9 @@ export default function SearchResultDisplay(props) {
                 keyword={props.keyword}
                 word={props.searchResult[props.displayedWord]}
                 selectedTerms={props.selectedTerms}
-                displayedTerm={props.displayedTerm}
-                setDisplayedTerm={props.setDisplayedTerm}
+                setSelectedTerms={props.setSelectedTerms}
+                displayedTermIndex={props.displayedTermIndex}
+                setDisplayedTermIndex={props.setDisplayedTermIndex}
             />
         </div>
     )

@@ -2,6 +2,8 @@ import React, { Component, useState } from "react";
 
 import TermKanjiDefinition from "./TermKanjiDefinition";
 
+import { eel } from "../eel.js";
+
 import "./style.css";
 
 export default function WordDefinitionDisplay(props) {
@@ -9,8 +11,9 @@ export default function WordDefinitionDisplay(props) {
     console.log(props)
     
     var terms = new Set()
-    var displayedTerm = props.displayedTerm
+    var displayedTerm = props.word.Terms[props.displayedTermIndex]
     var selectedTermIDs = props.selectedTerms.map(term => term.Term_ID)
+    var isSelected = selectedTermIDs.includes(displayedTerm.Term_ID)
 
 
     const japaneseTermText = (term, i) => {
@@ -22,11 +25,11 @@ export default function WordDefinitionDisplay(props) {
         return (
             <span lang="ja" 
                 className={
-                    (term.Japanese == props.word.Terms[displayedTerm].Japanese ? "bigTerm" : "smallTerm")
+                    (term.Japanese == displayedTerm.Japanese ? "bigTerm" : "smallTerm")
                     + " " +
-                    (selectedTermIDs.includes(term.Term_ID) ? "selectedTerm" : "")
+                    (term.Japanese == displayedTerm.Japanese && isSelected ? "selectedTerm" : "")
                 } 
-                onClick={() => {props.setDisplayedTerm(i)}}
+                onClick={() => {props.setDisplayedTermIndex(i)}}
             >
                 {term.Japanese}
             </span>
@@ -34,22 +37,32 @@ export default function WordDefinitionDisplay(props) {
     }
 
     const readingTermText = (term, i) => {
-        if (term.Japanese != props.word.Terms[displayedTerm].Japanese){
+        if (term.Japanese != displayedTerm.Japanese){
             return (<></>)
         }
 
         return (
             <span lang="ja" 
                 className={
-                    (i === displayedTerm ? "bigTerm" : "smallTerm")
+                    (i === props.displayedTermIndex ? "bigTerm" : "smallTerm")
                     + " " +
-                    (selectedTermIDs.includes(term.Term_ID) ? "selectedTerm" : "")
+                    (isSelected ? "selectedTerm" : "")
                 } 
-                onClick={() => {props.setDisplayedTerm(i)}}
+                onClick={() => {props.setDisplayedTermIndex(i)}}
             >
                 {term.Reading}
             </span>
         )
+    }
+
+    const toggleSelection = () => {
+        if (isSelected) {
+            // remove from list
+            eel.remove_selected(displayedTerm, props.keyword)((newSelected) => props.setSelectedTerms(newSelected))
+        } else {
+            // add to list
+            eel.add_selected(displayedTerm, props.keyword)((newSelected) => props.setSelectedTerms(newSelected))
+        }
     }
 
     return (
@@ -67,7 +80,7 @@ export default function WordDefinitionDisplay(props) {
             <div>Definitions:</div>
             <div>
                 <ol>
-                {props.word.Terms[displayedTerm].Meanings.map((meaning, index) => (
+                {displayedTerm.Meanings.map((meaning, index) => (
                     <li>{meaning.Definitions.join(", ")}</li>
                 ))}
                 </ol>
@@ -76,9 +89,14 @@ export default function WordDefinitionDisplay(props) {
                 Kanji:
             </div>
             <div>
-                {props.word.Terms[displayedTerm].Kanji.map((kanji, index) => (
+                {displayedTerm.Kanji.map((kanji, index) => (
                     <TermKanjiDefinition kanji={kanji} />
                 ))}
+            </div>
+            <div>
+                <button onClick={toggleSelection}>
+                    {isSelected ? "Unselect" : "Select"}
+                </button>
             </div>
             
         </div>

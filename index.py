@@ -31,6 +31,16 @@ def search_keywords(k):
 def get_selected(): # TODO
     return selected_terms
 
+@eel.expose
+def add_selected(term, keyword):
+    selected_terms[keyword].append(term)
+    return selected_terms
+
+@eel.expose
+def remove_selected(term, keyword):
+    selected_terms[keyword].remove(term)
+    return selected_terms
+
 
 if __name__ == '__main__':
     if len(sys.argv) == 0:

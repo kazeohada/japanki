@@ -12,9 +12,9 @@ export default function SelectionScreen(props) {
     const [searchKeywords, setSearchKeywords] = useState(props.searchKeywords);
     const [searchResults, setSearchResults] = useState(props.searchResults);
     const [selectedTerms, setSelectedTerms] = useState({})
-    const [displayedIndex, setDisplayedIndex] = useState(0)
+    const [displayedResultIndex, setDisplayedResultIndex] = useState(0)
     const [displayedWord, setDisplayedWord] = useState(0);
-    const [displayedTerm, setDisplayedTerm] = useState(0);
+    const [displayedTermIndex, setDisplayedTermIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {
@@ -29,44 +29,46 @@ export default function SelectionScreen(props) {
       fetchData();
     }, []);
 
-    const changeDisplayed = (change) => {
-      let newIndex = change + displayedIndex
-      if (newIndex >= searchResults.length ) {
+    const changeDisplayedResult = (change) => {
+      var newIndex = change + displayedResultIndex
+      if (newIndex >= searchKeywords.length ) {
         newIndex = 0
       } else if (newIndex < 0) {
-        newIndex = searchResults.length - 1
+        newIndex = searchKeywords.length - 1
       }
-      setDisplayedIndex(newIndex)
+      console.log(newIndex)
+      setDisplayedResultIndex(newIndex)
       setDisplayedWord(0)
-      setDisplayedTerm(0)
+      setDisplayedTermIndex(0)
     }
 
     if (isLoading) {
-      return (<div>Loading...</div>)
+      return (<></>)
     }
 
     
     return (
       <div>
         <div>
-          <button onClick={() => changeDisplayed(-1)}>{"<-"}</button>
+          <button onClick={() => changeDisplayedResult(-1)}>{"<-"}</button>
           <input
             className="searchBar"
             type="text"
-            value={searchKeywords[displayedIndex]}
+            value={searchKeywords[displayedResultIndex]}
           />
-          <button onClick={() => changeDisplayed(1)}>{"->"}</button>
+          <button onClick={() => changeDisplayedResult(1)}>{"->"}</button>
         </div>
         <div>
           <div>
             <SearchResultDisplay 
-              keyword={searchKeywords[displayedIndex]}
-              searchResult={searchResults[searchKeywords[displayedIndex]]}
+              keyword={searchKeywords[displayedResultIndex]}
+              searchResult={searchResults[searchKeywords[displayedResultIndex]]}
               displayedWord={displayedWord}
-              displayedTerm={displayedTerm}
-              selectedTerms={selectedTerms[searchKeywords[displayedIndex]]}
+              displayedTermIndex={displayedTermIndex}
+              selectedTerms={selectedTerms[searchKeywords[displayedResultIndex]]}
               setDisplayedWord={setDisplayedWord}
-              setDisplayedTerm={setDisplayedTerm} 
+              setDisplayedTermIndex={setDisplayedTermIndex} 
+              setSelectedTerms={setSelectedTerms}
             />
           </div>
         </div>
