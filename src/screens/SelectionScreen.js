@@ -29,6 +29,10 @@ export default function SelectionScreen(props) {
       fetchData();
     }, []);
 
+    if (isLoading) {
+      return (<></>)
+    }
+
     const changeDisplayedResult = (change) => {
       var newIndex = change + displayedResultIndex
       if (newIndex >= searchKeywords.length ) {
@@ -42,10 +46,9 @@ export default function SelectionScreen(props) {
       setDisplayedTermIndex(0)
     }
 
-    if (isLoading) {
-      return (<></>)
+    const generateCards = () => {
+      eel.generate_anki()();
     }
-
     
     return (
       <div>
@@ -71,6 +74,11 @@ export default function SelectionScreen(props) {
               setSelectedTerms={setSelectedTerms}
             />
           </div>
+        </div>
+        <div>
+          <button onClick={generateCards}>
+            Generate Cards
+          </button>
         </div>
       </div>
     )

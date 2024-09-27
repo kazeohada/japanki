@@ -1,5 +1,3 @@
-from pyexpat import model
-import psycopg2
 from typing import List
 import time
 from config import CURSOR as cursor

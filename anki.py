@@ -1,7 +1,6 @@
 import database
 import genanki
 import time
-from config import CURSOR
 
 def create_anki_deck():
     deck_query_results = database.get_anki_deck(deck_ids=[1723547770])[0]
@@ -89,3 +88,6 @@ def create_notes(anki_deck, anki_model, terms):
         anki_deck = add_note(note, anki_deck, anki_model)
 
     return anki_deck
+
+def write_to_file(deck, filename):
+    genanki.Package(deck).write_to_file(filename)

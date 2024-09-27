@@ -2,6 +2,7 @@
 import eel
 import sys
 import database
+import anki
 import search
 
 keywords = []
@@ -26,6 +27,22 @@ def search_keywords(k):
         search_results[keyword] = qsearch_results[keyword]
         selected_terms[keyword] = search.auto_select(qsearch_results[keyword], keyword)
     return search_results
+
+@eel.expose
+def generate_anki():
+    global selected_terms
+
+    anki_deck, anki_model = anki.create_anki_deck()
+
+    selected_list = []
+
+    for key in selected_terms.keys():
+        selected_list += selected_terms[key]
+
+    anki_deck = anki.create_notes(anki_deck, anki_model, selected_list)
+    anki.write_to_file(anki_deck, "japanki.apkg")
+    # conn.commit()
+    return
 
 @eel.expose
 def get_selected(): # TODO

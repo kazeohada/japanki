@@ -1,7 +1,4 @@
-import cli
-import anki
 import database
-import genanki
 
 def search_database(search_keywords):
     incomplete = False
@@ -13,16 +10,6 @@ def search_database(search_keywords):
         search_results[search_keyword] = search_result
     
     return search_results
-
-def input_search():
-    print("Search for words:")
-    search_keywords = []
-    search_keyword = input("")
-    while search_keyword != "":
-        search_keywords.append(search_keyword.strip())
-        search_keyword = input("")
-    
-    return search_keywords
 
 def sort_results(search_result, keyword):
     sorted_result = []
@@ -89,31 +76,3 @@ def auto_select(search_result, keyword):
                 return [search_result[i]["Terms"][j]]
     
     return [search_result[0]["Terms"][0]]
-
-def main():
-    search_keywords = list(set(input_search()))
-    search_results, incomplete = search_database(search_keywords)
-    assert search_keywords == list(search_results.keys())
-
-    selected = {}
-    for keyword in search_keywords:
-        search_results[keyword] = sort_results(search_results[keyword], keyword)
-        selected[keyword] = [(auto_select(search_results[keyword], keyword))]
-
-
-    selected = cli.main(search_keywords, search_results, selected)
-
-    selected_list = []
-    for key in selected.keys():
-        selected_list += selected[key]
-    
-    anki_deck, anki_model = anki.create_anki_deck()
-
-    anki_deck = anki.create_notes(anki_deck, anki_model, selected_list)
-    genanki.Package(anki_deck).write_to_file("japanki.apkg")
-    # conn.commit()
-
-    
-    
-if __name__ == '__main__':
-    main()
