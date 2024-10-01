@@ -3,6 +3,8 @@ import React from "react";
 import "./style.css";
 
 export default function SearchResultListItem(props) {
+    const maxTextLength = 75
+
     const japaneseText = () => {
         const textArray = []
         for (let i=0; i<props.word.Terms.length; i++){
@@ -13,7 +15,9 @@ export default function SearchResultListItem(props) {
                 textArray.push(props.word.Terms[i].Reading)
             }
         }
-        return textArray.join("、")
+        const text = textArray.join("、")
+
+        return text.length > maxTextLength ? `${text.slice(0, maxTextLength - 3)}...` : text
     }
 
     const defintionsText = () => {
@@ -27,15 +31,18 @@ export default function SearchResultListItem(props) {
                 }
             }
         }
-        return textArray.join(", ")
+
+        const text = textArray.join(", ")
+
+        return text.length > maxTextLength ? `${text.slice(0, maxTextLength - 3)}...` : text
     }
 
     return (
         <div 
             lang="ja"
-            className="listItem"
+            class= {props.index == props.displayedWordIndex ? "listItem displayedListItem" : "listItem"}
             onClick={() => {
-                props.setDisplayedWord(props.index)
+                props.setDisplayedWordIndex(props.index)
                 props.setDisplayedTermIndex(0)
             }}
         >

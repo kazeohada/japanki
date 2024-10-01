@@ -13,7 +13,7 @@ export default function SelectionScreen(props) {
     const [searchResults, setSearchResults] = useState(props.searchResults);
     const [selectedTerms, setSelectedTerms] = useState({})
     const [displayedResultIndex, setDisplayedResultIndex] = useState(0)
-    const [displayedWord, setDisplayedWord] = useState(0);
+    const [displayedWordIndex, setDisplayedWordIndex] = useState(0);
     const [displayedTermIndex, setDisplayedTermIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -42,7 +42,7 @@ export default function SelectionScreen(props) {
       }
       console.log(newIndex)
       setDisplayedResultIndex(newIndex)
-      setDisplayedWord(0)
+      setDisplayedWordIndex(0)
       setDisplayedTermIndex(0)
     }
 
@@ -51,8 +51,8 @@ export default function SelectionScreen(props) {
     }
     
     return (
-      <div>
-        <div>
+      <div style={{padding: "2% 5%"}}>
+        <div style={{marginBottom: "1.5%"}}>
           <button onClick={() => changeDisplayedResult(-1)}>{"<-"}</button>
           <input
             className="searchBar"
@@ -61,21 +61,19 @@ export default function SelectionScreen(props) {
           />
           <button onClick={() => changeDisplayedResult(1)}>{"->"}</button>
         </div>
-        <div>
-          <div>
-            <SearchResultDisplay 
-              keyword={searchKeywords[displayedResultIndex]}
-              searchResult={searchResults[searchKeywords[displayedResultIndex]]}
-              displayedWord={displayedWord}
-              displayedTermIndex={displayedTermIndex}
-              selectedTerms={selectedTerms[searchKeywords[displayedResultIndex]]}
-              setDisplayedWord={setDisplayedWord}
-              setDisplayedTermIndex={setDisplayedTermIndex} 
-              setSelectedTerms={setSelectedTerms}
-            />
-          </div>
+        <div style={{marginBottom: "1.5%"}}>
+          <SearchResultDisplay 
+            keyword={searchKeywords[displayedResultIndex]}
+            searchResult={searchResults[searchKeywords[displayedResultIndex]]}
+            displayedWordIndex={displayedWordIndex}
+            displayedTermIndex={displayedTermIndex}
+            selectedTerms={selectedTerms[searchKeywords[displayedResultIndex]]}
+            setDisplayedWordIndex={setDisplayedWordIndex}
+            setDisplayedTermIndex={setDisplayedTermIndex} 
+            setSelectedTerms={setSelectedTerms}
+          />
         </div>
-        <div>
+        <div style={{marginBottom: "1.5%"}}>
           <button onClick={generateCards}>
             Generate Cards
           </button>

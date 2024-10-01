@@ -66,7 +66,7 @@ export default function WordDefinitionDisplay(props) {
     }
 
     return (
-        <div class="wordDefinitionBox">
+        <div class="searchResultDisplayComponent wordDefinitionBox">
             <div> 
                 {props.word.Terms.map((term, index) => (
                     japaneseTermText(term, index)

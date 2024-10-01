@@ -9,21 +9,22 @@ export default function SearchResultDisplay(props) {
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{flex: "1"}}>
+            <div class="searchResultDisplayComponent" >
                 {props.searchResult.map((word, index) => (
                     <SearchResultListItem 
                         keyword={props.keyword}
                         word={word}
                         selectedTerms={props.selectedTerms}
                         index={index}
-                        setDisplayedWord={props.setDisplayedWord}
+                        displayedWordIndex={props.displayedWordIndex}
+                        setDisplayedWordIndex={props.setDisplayedWordIndex}
                         setDisplayedTermIndex={props.setDisplayedTermIndex}
                     />
                 ))}
             </div>
-            <WordDefinitionDisplay 
+            <WordDefinitionDisplay
                 keyword={props.keyword}
-                word={props.searchResult[props.displayedWord]}
+                word={props.searchResult[props.displayedWordIndex]}
                 selectedTerms={props.selectedTerms}
                 setSelectedTerms={props.setSelectedTerms}
                 displayedTermIndex={props.displayedTermIndex}

@@ -37,7 +37,7 @@ export default function SearchScreen(props) {
   };
 
   return (
-    <div>
+    <div  style={{padding: "2% 5%"}}>
       <input
         className="searchBar"
         type="text"
