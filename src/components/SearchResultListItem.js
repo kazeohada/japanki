@@ -4,6 +4,7 @@ import "./style.css";
 
 export default function SearchResultListItem(props) {
     const maxTextLength = 75
+    console.log(props)
 
     const japaneseText = () => {
         const textArray = []

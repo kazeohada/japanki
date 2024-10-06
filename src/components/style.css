@@ -16,6 +16,7 @@
     border-style: solid;
     border-color: black;
     border-width: thin;
+    border-bottom: none;
     text-align: start;
     padding: 5px;
 }
@@ -28,11 +29,6 @@
     background-color: #d5d5d5;
 }
 
-.searchResultDisplayComponent {
-    flex: 1;
-    height: 500px; 
-    overflow-y: scroll;
-}
 
 .wordDefinitionBox {
     background-color: white;
@@ -50,4 +46,52 @@
 
 .selectedTerm {
     font-weight: bold;
+}
+
+.selectionScreenComponent {
+    margin-bottom: 1.5%;
+}
+
+.searchResultBox {
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    display: flex;
+    justify-content: center;
+    height: 500px;
+}
+
+
+.searchResultDisplayComponent {
+    flex: 1;
+    height: inherit;
+    overflow-y: scroll;
+}
+
+.wordDefinitionBox {
+    padding: 8px;
+}
+
+.wordDefinitionBoxTitle {
+    font-size: 18px;
+}
+
+.wordDefinitionBoxContent {
+    margin: 10px 0px;
+}
+
+.wordDefinitionBoxContent ol{
+    margin: auto;
+}
+
+.wordDefinitionHr {
+    margin: 0px;
+}
+
+.termKanjiListItem {
+    margin-bottom: 10px;
+}
+
+.termKanji {
+    font-size: 24px;
 }

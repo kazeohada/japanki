@@ -66,37 +66,48 @@ export default function WordDefinitionDisplay(props) {
     }
 
     return (
-        <div class="searchResultDisplayComponent wordDefinitionBox">
-            <div> 
-                {props.word.Terms.map((term, index) => (
-                    japaneseTermText(term, index)
-                ))}
+        <div class="searchResultDisplayComponent">
+            <div class="wordDefinitionBox japaneseBox">
+                <div> 
+                    {props.word.Terms.map((term, index) => (
+                        japaneseTermText(term, index)
+                    ))}
+                </div>
+                <div> 
+                    {props.word.Terms.map((term, index) => (
+                        readingTermText(term, index)
+                    ))}
+                </div>
             </div>
-            <div> 
-                {props.word.Terms.map((term, index) => (
-                    readingTermText(term, index)
-                ))}
+            <hr class="wordDefinitionHr"/>
+            <div class ="wordDefinitionBox definitionBox">
+                <div class="wordDefinitionBoxTitle">Definitions:</div>
+                <div class="wordDefinitionBoxContent">
+                    <ol>
+                    {displayedTerm.Meanings.map((meaning, index) => (
+                        <li>{meaning.Definitions.join(", ")}</li>
+                    ))}
+                    </ol>
+                </div>
             </div>
-            <div>Definitions:</div>
-            <div>
-                <ol>
-                {displayedTerm.Meanings.map((meaning, index) => (
-                    <li>{meaning.Definitions.join(", ")}</li>
-                ))}
-                </ol>
+            <hr class="wordDefinitionHr"/>
+            <div class="wordDefinitionBox kanjiBox">
+                <div class="wordDefinitionBoxTitle">
+                    Kanji:
+                </div>
+                <div class="wordDefinitionBoxContent">
+                    {displayedTerm.Kanji.map((kanji, index) => (
+                        <TermKanjiDefinition kanji={kanji} />
+                    ))}
+                </div>
             </div>
-            <div>
-                Kanji:
-            </div>
-            <div>
-                {displayedTerm.Kanji.map((kanji, index) => (
-                    <TermKanjiDefinition kanji={kanji} />
-                ))}
-            </div>
-            <div>
-                <button onClick={toggleSelection}>
-                    {isSelected ? "Unselect" : "Select"}
-                </button>
+            <hr class="wordDefinitionHr"/>
+            <div class="wordDefinitonBox">
+                <div class="wordDefinitionBoxContent">
+                    <button onClick={toggleSelection}>
+                        {isSelected ? "Unselect" : "Select"}
+                    </button>
+                </div>
             </div>
             
         </div>

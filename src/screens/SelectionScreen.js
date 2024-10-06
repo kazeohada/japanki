@@ -52,7 +52,7 @@ export default function SelectionScreen(props) {
     
     return (
       <div style={{padding: "2% 5%"}}>
-        <div style={{marginBottom: "1.5%"}}>
+        <div class="selectionScreenComponent" >
           <button onClick={() => changeDisplayedResult(-1)}>{"<-"}</button>
           <input
             className="searchBar"
@@ -61,7 +61,7 @@ export default function SelectionScreen(props) {
           />
           <button onClick={() => changeDisplayedResult(1)}>{"->"}</button>
         </div>
-        <div style={{marginBottom: "1.5%"}}>
+        <div class="selectionScreenComponent" >
           <SearchResultDisplay 
             keyword={searchKeywords[displayedResultIndex]}
             searchResult={searchResults[searchKeywords[displayedResultIndex]]}
@@ -73,7 +73,7 @@ export default function SelectionScreen(props) {
             setSelectedTerms={setSelectedTerms}
           />
         </div>
-        <div style={{marginBottom: "1.5%"}}>
+        <div class="selectionScreenComponent" >
           <button onClick={generateCards}>
             Generate Cards
           </button>

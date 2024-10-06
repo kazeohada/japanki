@@ -8,13 +8,13 @@ export default function SearchResultDisplay(props) {
     console.log(props)
 
     return (
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div class="searchResultBox">
             <div class="searchResultDisplayComponent" >
                 {props.searchResult.map((word, index) => (
                     <SearchResultListItem 
                         keyword={props.keyword}
                         word={word}
-                        selectedTerms={props.selectedTerms}
+                        selectedTerms={props.selectedTerms.filter((term) => term.Word_ID == word.Word_ID)}
                         index={index}
                         displayedWordIndex={props.displayedWordIndex}
                         setDisplayedWordIndex={props.setDisplayedWordIndex}
