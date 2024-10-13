@@ -82,6 +82,7 @@
 
 .wordDefinitionBoxContent ol{
     margin: auto;
+    text-align: left;
 }
 
 .wordDefinitionHr {

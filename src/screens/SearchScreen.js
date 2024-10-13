@@ -31,7 +31,16 @@ export default function SearchScreen(props) {
     if (props.searchKeywords.length > 0) {
         eel.search_keywords(props.searchKeywords)((results) => {
           props.setSearchResults(results);
-          navigate("/selection");
+          var userContinues = true;
+          console.log(results)
+          console.log(props.searchKeywords.some((keyword) => results[keyword].length === 0 ))
+          if (props.searchKeywords.some((keyword) => results[keyword].length === 0 )) {
+            console.log("oops")
+            userContinues = window.confirm("Some results couldn't be found. Continue anyway?")
+          }
+          if (userContinues){
+            navigate("/selection")
+          }
         });
     }
   };

@@ -3,24 +3,24 @@ import time
 from config import CURSOR as cursor
 
 def search_word(keyword: str):
-    word_ids = []
-    term_ids = []
+    word_ids = set([]) # TODO: compare list vs set
+    term_ids = [] # TODO: compare list vs set
 
     # using english
     definitions = get_meaning_definition(definitions=[keyword])
-    [word_ids.append(definition["Word_ID"]) for definition in definitions if definition["Word_ID"] not in word_ids]
+    [word_ids.add(definition["Word_ID"]) for definition in definitions if definition["Word_ID"] not in word_ids]
 
     # using japanese
-    qterms = get_word_term(terms=[keyword], word_ids=word_ids) # with word_ids found above
-    [word_ids.append(term["Word_ID"]) for term in qterms if term["Word_ID"] not in word_ids]
-    qterms = get_word_term(word_ids=word_ids)
+    qterms = get_word_term(terms=[keyword], word_ids=list(word_ids)) # with word_ids found above
+    [word_ids.add(term["Word_ID"]) for term in qterms if term["Word_ID"] not in word_ids]
+    qterms = get_word_term(word_ids=list(word_ids))
     qmeanings = get_term_meaning(term_ids=[term["Term_ID"] for term in qterms])
     qdefinitions = get_meaning_definition(meaning_ids=[meaning["Meaning_ID"] for meaning in qmeanings])
 
-    words = get_word_popularity(word_ids=word_ids)
+    words = get_word_popularity(word_ids=list(word_ids))
 
     # kanji
-    qterm_kanji = get_term_kanji(word_ids=word_ids)
+    qterm_kanji = get_term_kanji(word_ids=list(word_ids))
     kanji_list = []
     [kanji_list.append(kanji["Kanji"]) for kanji in qterm_kanji if kanji["Kanji"] not in kanji_list]
     qkanji = search_kanji(kanji_search=kanji_list)

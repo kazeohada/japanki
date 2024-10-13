@@ -63,7 +63,6 @@ def create_notes(anki_deck, anki_model, terms):
         
         for i in range(min(5, len(term["Kanji"]))):
             kanji = term["Kanji"][i]
-            #TODO sort kunyomi
             kunyomi = [k["Kunyomi"] + "." + k["Ending"] if k["Ending"] else k["Kunyomi"] for k in kanji["Kunyomi"]]
             onyomi = [o["Onyomi"] for o in kanji["Onyomi"]]
 

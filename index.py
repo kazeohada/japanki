@@ -23,9 +23,12 @@ def search_keywords(k):
 
     qsearch_results = search.search_database(keywords)
     for keyword in keywords:
-        qsearch_results[keyword] = search.sort_results(qsearch_results[keyword], keyword)
-        search_results[keyword] = qsearch_results[keyword]
-        selected_terms[keyword] = search.auto_select(qsearch_results[keyword], keyword)
+        if qsearch_results[keyword]:
+            qsearch_results[keyword] = search.sort_results(qsearch_results[keyword], keyword)
+            search_results[keyword] = qsearch_results[keyword]
+            selected_terms[keyword] = search.auto_select(qsearch_results[keyword], keyword)
+        else:
+            search_results[keyword] = []
     return search_results
 
 @eel.expose
@@ -45,7 +48,7 @@ def generate_anki():
     return
 
 @eel.expose
-def get_selected(): # TODO
+def get_selected(): # TODO? add parameters
     return selected_terms
 
 @eel.expose

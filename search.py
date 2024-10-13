@@ -17,14 +17,14 @@ def sort_results(search_result, keyword):
     for word in search_result:
         terms = word["Terms"]
         meanings = []
-        meaning_ids = []
+        meaning_ids = set([])
         for term in terms:
             if term["Japanese"] == keyword or term["Reading"] == keyword:
                 return search_result
             for meaning in term["Meanings"]:
                 if meaning["Meaning_ID"] not in meaning_ids: 
                     meanings.append(meaning["Definitions"])
-                    meaning_ids.append(meaning["Meaning_ID"])
+                    meaning_ids.add(meaning["Meaning_ID"])
         meaning_dict[word["Word_ID"]] = meanings
 
     pointer = 0

@@ -109,7 +109,7 @@ def unselect(selected, to_unselect):
     [selected.remove(term) for term in to_unselect if term in selected]
     return selected
     
-def interpret_input(input, pointed_word, search_result): # TODO
+def interpret_input(input, pointed_word, search_result):
     if not input: return
     args = input.split(" -")
     func = None
@@ -202,7 +202,7 @@ def display_search_result(keyword, search_result, selected):
             sys.stdout.write("\033[F" * (11 + 2))
             sys.stdout.flush()
             return 1, selected
-        elif pressed_key == keys.ENTER: #TODO
+        elif pressed_key == keys.ENTER:
             if user_input == "":
                 return 0, selected
             

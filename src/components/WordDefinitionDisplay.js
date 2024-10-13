@@ -27,7 +27,7 @@ export default function WordDefinitionDisplay(props) {
                 className={
                     (term.Japanese == displayedTerm.Japanese ? "bigTerm" : "smallTerm")
                     + " " +
-                    (term.Japanese == displayedTerm.Japanese && isSelected ? "selectedTerm" : "")
+                    (selectedTermIDs.includes(term.Term_ID) ? "selectedTerm" : "")
                 } 
                 onClick={() => {props.setDisplayedTermIndex(i)}}
             >
@@ -46,7 +46,7 @@ export default function WordDefinitionDisplay(props) {
                 className={
                     (i === props.displayedTermIndex ? "bigTerm" : "smallTerm")
                     + " " +
-                    (isSelected ? "selectedTerm" : "")
+                    (selectedTermIDs.includes(term.Term_ID) ? "selectedTerm" : "")
                 } 
                 onClick={() => {props.setDisplayedTermIndex(i)}}
             >
