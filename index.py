@@ -1,12 +1,15 @@
 # coding: utf-8
+from ast import Or
 import eel
 import sys
 import database
 import anki
 import search
+import registry
+from collections import OrderedDict
 
 keywords = []
-search_results = {}
+search_results = OrderedDict()
 selected_terms = {}
 
 
@@ -19,16 +22,28 @@ def search_keywords(k):
     global keywords
     global search_results
 
-    keywords = k
+    to_search = []
 
-    qsearch_results = search.search_database(keywords)
+    keywords = k
     for keyword in keywords:
+        cached = registry.search_results.get(keyword)
+        if cached != -1:
+            search_results[keyword] = cached
+            registry.search_results.put(keyword, cached)
+        else: 
+            search_results[keyword] = []
+            to_search.append(keyword)
+            
+    
+    qsearch_results = search.search_database(to_search)
+    for keyword in to_search:
         if qsearch_results[keyword]:
             qsearch_results[keyword] = search.sort_results(qsearch_results[keyword], keyword)
             search_results[keyword] = qsearch_results[keyword]
             selected_terms[keyword] = search.auto_select(qsearch_results[keyword], keyword)
         else:
             search_results[keyword] = []
+        registry.search_results.put(keyword, search_results[keyword])
     return search_results
 
 @eel.expose
