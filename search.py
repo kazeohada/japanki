@@ -1,12 +1,9 @@
 import database
 
 def search_database(search_keywords):
-    incomplete = False
     search_results = {}
     for search_keyword in search_keywords:
         search_result = database.search_word(keyword=search_keyword)
-        if not incomplete and search_result == []:
-            incomplete = True
         search_results[search_keyword] = search_result
     
     return search_results

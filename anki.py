@@ -2,16 +2,9 @@ import database
 import genanki
 import time
 
-def create_anki_deck():
-    deck_query_results = database.get_anki_deck(deck_ids=[1723547770])[0]
-
-    anki_deck = genanki.Deck(
-        deck_id = deck_query_results["Deck_ID"],
-        name = deck_query_results["Deck_Name"]
-    )
-
-    model_template_query_results = database.get_anki_model_template(model_ids=[1723547904])
-    model_fields_query_results = database.get_anki_fields(model_ids=[1723547904])
+def create_anki_model(id: int):
+    model_template_query_results = database.get_anki_model_template(model_ids=[id])
+    model_fields_query_results = database.get_anki_fields(model_ids=[id])
 
     model_dict = {}
     model_dict["Model_ID"] = model_template_query_results[0]["Model_ID"]
@@ -31,8 +24,17 @@ def create_anki_deck():
         templates = model_dict["Templates"] ,
         css = model_dict["Style"]
     )
+    return anki_model
 
-    return anki_deck, anki_model
+def create_anki_deck(id: int):
+    deck_query_results = database.get_anki_deck(deck_ids=[id])[0]
+
+    anki_deck = genanki.Deck(
+        deck_id = deck_query_results["Deck_ID"],
+        name = deck_query_results["Deck_Name"]
+    )
+
+    return anki_deck
 
 def html_list_of_meanings(term):
     meanings = term["Meanings"]

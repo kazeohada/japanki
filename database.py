@@ -453,22 +453,26 @@ def get_kanji_defintion(kanji_ids: List[int] = [], kanji: List[str] = [], defini
     
     return result
 
-def get_anki_deck(deck_ids: List[int] = [], deck_names: List[str] = []):
-    if deck_ids == [] and deck_names == []:
+def get_anki_deck(deck_ids: List[int] = [], deck_names: List[str] = [], all: bool = False):
+    if deck_ids == [] and deck_names == [] and not all:
         return []
     
-    conditions = []
+    statement = """SELECT DISTINCT "ID", "Name" FROM "Anki_Deck" """
+    
+    if not all:
+        conditions = []
 
-    if deck_names:
-        deck_name_condition = f""""Name" IN ({', '.join(f"'{name}'" for name in deck_names)})"""
-        conditions.append(deck_name_condition)
+        if deck_names:
+            deck_name_condition = f""""Name" IN ({', '.join(f"'{name}'" for name in deck_names)})"""
+            conditions.append(deck_name_condition)
 
-    if deck_ids:
-        deck_id_condition = f""""ID" IN ({', '.join(f"'{id}'" for id in deck_ids)})"""
-        conditions.append(deck_id_condition)
+        if deck_ids:
+            deck_id_condition = f""""ID" IN ({', '.join(f"'{id}'" for id in deck_ids)})"""
+            conditions.append(deck_id_condition)
 
-    statement = f"""SELECT DISTINCT "ID", "Name" FROM "Anki_Deck" WHERE {' OR '.join(conditions)}
-                    ORDER BY "ID" """  
+        statement += {' OR '.join(conditions)}
+    
+    statement += """ ORDER BY "ID" """ 
     
     cursor.execute(statement)
     result = cursor.fetchall()
@@ -481,6 +485,41 @@ def get_anki_deck(deck_ids: List[int] = [], deck_names: List[str] = []):
         result[i] = res_dict
 
     return result
+
+def get_anki_model(model_ids: List[int] = [], model_names: List[str] = [], all: bool = False):
+    if model_ids == [] and model_names == [] and not all:
+        return []
+    
+    statement = """SELECT DISTINCT "ID", "Name", "Style" FROM "Anki_Model" """
+    
+    if not all:
+        conditions = []
+
+        if model_names:
+            model_name_condition = f""""Name" IN ({', '.join(f"'{name}'" for name in model_names)})"""
+            conditions.append(model_name_condition)
+
+        if model_ids:
+            model_id_condition = f""""ID" IN ({', '.join(f"'{id}'" for id in model_ids)})"""
+            conditions.append(model_id_condition)
+
+        statement += {' OR '.join(conditions)}
+    
+    statement += """ ORDER BY "ID" """ 
+    
+    cursor.execute(statement)
+    result = cursor.fetchall()
+
+    for i in range(len(result)):
+        res = result[i]
+        res_dict = {}
+        res_dict["Model_ID"] = res[0]
+        res_dict["Model_Name"] = res[1]
+        res_dict["Style"] = res[2]
+        result[i] = res_dict
+
+    return result
+
 
 def get_anki_fields(model_ids: List[int] = []):
     if not model_ids: return []

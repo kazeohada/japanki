@@ -1,5 +1,7 @@
 # coding: utf-8
 from ast import Or
+from multiprocessing.managers import Namespace
+from tkinter.font import names
 import eel
 import sys
 import database
@@ -7,10 +9,13 @@ import anki
 import search
 import registry
 from collections import OrderedDict
+from typing import List
 
 keywords = []
 search_results = OrderedDict()
 selected_terms = {}
+anki_deck = None
+anki_model = None
 
 
 @eel.expose
@@ -49,6 +54,8 @@ def search_keywords(k):
 @eel.expose
 def generate_anki():
     global selected_terms
+    global anki_deck
+    global anki_model
 
     anki_deck, anki_model = anki.create_anki_deck()
 
@@ -62,9 +69,19 @@ def generate_anki():
     # conn.commit()
     return
 
+
+
 @eel.expose
-def get_selected(): # TODO? add parameters
-    return selected_terms
+def get_selected(keywords : List[str] = []): # TODO? add parameters
+    if not keywords:
+        return selected_terms
+    
+    returned = []
+    for keyword in keywords:
+        if keyword in keywords:
+            returned[keyword] = selected_terms[keyword]
+    
+    return returned
 
 @eel.expose
 def add_selected(term, keyword):
@@ -77,7 +94,44 @@ def remove_selected(term, keyword):
     return selected_terms
 
 
+@eel.expose
+def get_anki_deck(ids : List[int] = [], names : List[str] = []):
+    decks = None
+    if ids == [] and names == []:
+        decks = database.get_anki_deck(all=True)
+    else:
+        decks = database.get_anki_deck(deck_ids=ids, deck_names=names)
+    return decks
+
+@eel.expose
+def get_anki_model(ids : List[int] = [], names : List[str] = []):
+    models = None
+    if ids == []:
+        models = database.get_anki_model(all=True)
+    else:
+        models = database.get_anki_model(model_ids=ids, model_names=names)
+    return models
+
+@eel.expose
+def select_anki_deck(id : int) -> int:
+    global anki_deck
+    if database.get_anki_deck(ids=[id]) != []:
+        anki_deck = anki.create_anki_deck(id)
+        return id
+    return -1
+
+@eel.expose
+def select_anki_model(id : int) -> int:
+    global anki_model
+    if database.get_anki_model(ids=[id]) != []:
+        anki_model = anki.create_anki_model(id)
+        return id
+    return -1
+
+
+
 if __name__ == '__main__':
+    print(get_anki_model())
     if len(sys.argv) == 0:
         eel.init('build')
         eel.start('index.html')
